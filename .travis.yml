@@ -1,3 +1,6 @@
+#    access_key_id: $AWS_ACCESS_KEY
+#secret_access_key: $AWS_SECRET_KEY
+#
 sudo : required
 services: 
   - docker
@@ -6,3 +9,16 @@ before_install:
 
 script: 
   - docker run -e CI=true elitewarrior/docker-react npm run test
+
+deploy: 
+  # edge: true
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "Docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-1-499356329009"
+  bucket_path: "Docker-react"
+  on:
+    branch: master
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"
